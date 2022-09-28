@@ -1,0 +1,15 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>recursos/upload.png</file>
+    <file>recursos/download.png</file>
+    <file>recursos/down.png</file>
+    <file>recursos/play.png</file>
+    <file>recursos/pause_ic.png</file>
+    <file>recursos/play_ic.png</file>
+    <file>recursos/stop_ic.png</file>
+    <file>recursos/add.png</file>
+    <file>recursos/cinemaSimi.png</file>
+    <file>recursos/question_red.png</file>
+    <file>recursos/upc_logo.png</file>
+  </qresource>
+</RCC>
