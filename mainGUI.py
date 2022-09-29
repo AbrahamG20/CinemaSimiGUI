@@ -2,22 +2,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QStackedWidget, QVBoxLayout
 from home import Ui_CinemaSimi
 from newProject import Ui_NewProject
+from newExport import Ui_Export
 import sys
 import icons_rc
 
-#class MainWindow(QMainWindow):
-#    def __init__(self):
-#        super(MainWindow, self).__init__()
-#        self.startMainWindow()
-
-#    def startMainWindow(self):
-#        self.ui = Ui_CinemaSimi()
-#        self.ui.setupUi(self)
-#        self.ui.btnAdd.clicked.connect(self.startNewProject)
-
-#    def startNewProject(self):
-#        self.ui = Ui_NewProject()
-#        self.ui.setupUi(self)
 
 class Home(QWidget):
     def __init__(self):
@@ -31,12 +19,24 @@ class NewProject(QWidget):
         super(NewProject,self).__init__()
         self.ui = Ui_NewProject()
         self.ui.setupUi(self)
+        self.ui.btnCancel.clicked.connect(self.goExport)
 
-def goNewProject():
-    widget.setCurrentIndex(widget.currentIndex()+1)
+
+
+class NewExport(QWidget):
+    def __init__(self):
+        super(NewExport,self).__init__()
+        self.ui = Ui_Export()
+        self.ui.setupUi(self)
 
 def goHome():
-    widget.setCurrentIndex(widget.currentIndex()-1)
+    widget.setCurrentIndex(0)
+
+def goNewProject():
+    widget.setCurrentIndex(1)
+
+def goExport():
+    widget.setCurrentIndex(2)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -53,10 +53,17 @@ if __name__ == "__main__":
     newProject = QtWidgets.QWidget()
     ui1 = Ui_NewProject()
     ui1.setupUi(newProject)
-    ui1.btnProcesar.clicked.connect(goHome)
+    ui1.btnCancel.clicked.connect(goExport)
+
+    newExport = QtWidgets.QWidget()
+    ui2 = Ui_Export()
+    ui2.setupUi(newExport)
+    #ui1.btnProcesar.clicked.connect(goHome)
 
     widget.addWidget(CinemaSimi)
     widget.addWidget(newProject)
+    widget.addWidget(newExport)
+
     widget.setFixedWidth(1080)
     widget.setFixedHeight(720)
 
@@ -65,16 +72,10 @@ if __name__ == "__main__":
 
     widget.show()
 
-    #CinemaSimi.show()
+    #while ui1.timer.isActive():
+    #    print(ui1.progressBar.value())
+    #    if ui1.progressBar.value() == 100:
+    #        widget.setCurrentIndex(2)
+
     sys.exit(app.exec_())
 
-
- #   def startMainWindow(self):
- #       self.ui = Ui_CinemaSimi()
- #       self.ui.setupUi(self)
- #       self.ui.btnAdd.clicked.connect(self.startNewProject)
-
- #   def startNewProject(self):
- #       print('test')
- #       self.ui = Ui_NewProject()
- #       self.ui.setupUi(self)
