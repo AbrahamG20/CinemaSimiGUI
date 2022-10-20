@@ -24,7 +24,7 @@ El video de entrada, que se desea subtitular, debe cumplir la siguientes condici
   . El vídeo debe contener diálogos legibles, y, de preferencia, poca bulla de fondo.
   
  
- Se requiere la instalación de los dos drivers adjuntados en la carpeta "Instaladores", o, descargarlos e instalarlos manualmente de los siguientes enlaces:
+ Se requiere la instalación de dos drivers de vídeo, descargarlos e instalarlos manualmente de los siguientes enlaces:
  
  
  ImageMagick: https://imagemagick.org/script/download.php  (Buscar Windows Binary Release)
