@@ -1,7 +1,7 @@
 # CinemaSimiGUI
 Interfaz del proyecto CinemaSimi: Subtitulado de cine al quechua utilizando deep learning
 
-MANUAL DE USUARIO:
+#MANUAL DE USUARIO:
 
 Los Sistemas Operativos compatibles son los siguientes:
 
