@@ -21,6 +21,7 @@ El video de entrada, que se desea subtitular, debe cumplir la siguientes condici
  Se requiere la instalación de los dos drivers adjuntados en la carpeta "Instaladores", o, descargarlos e instalarlos manualmente de los siguientes enlaces:
  
  ImageMagick: https://imagemagick.org/script/download.php  (Buscar Windows Binary Release)
+ 
  KLite Codec: https://codecguide.com/download_kl.htm       (Buscar Versión Standard) 
  
  *Al momento de la instalación de ImageMagick seleccionar la opción "Install legacy Utilities (e.g. convert)"  (Se adjunta foto)
