@@ -1,7 +1,7 @@
 # CinemaSimiGUI
 Interfaz del proyecto CinemaSimi: Subtitulado de cine al quechua utilizando deep learning
 
-#MANUAL DE USUARIO:
+## MANUAL DE USUARIO:
 
 Los Sistemas Operativos compatibles son los siguientes:
 
@@ -42,15 +42,15 @@ Para ejecutar la aplicación utilizar el script mainGUI.py
 
 Las librerías necesarias para la correcta ejecución de la interfaz son las siguientes:
 
-pip install PyQt5
+#### pip install PyQt5
 
-pip install SpeechRecognition
+#### pip install SpeechRecognition
 
-pip install tinytag
+#### pip install tinytag
 
-pip install moviepy
+#### pip install moviepy
 
-## EJECUTABLE
+### EJECUTABLE
 
 Descomprimir el archivo .exe y ejecutarlo.
 
