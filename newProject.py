@@ -1,3 +1,4 @@
+import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtMultimediaWidgets import *
@@ -6,12 +7,12 @@ from PyQt5.QtCore import QUrl, QTimer
 from tinytag import TinyTag
 import math
 import time
+from newExport import updatePath
 import speechRecognition
-from PyQt5.QtWidgets import QVBoxLayout
-import icons_rc
+from subtitle import subtitle
 
 class Ui_NewProject(object):
-    actualPath = ""
+
     def setupUi(self, NewProject):
         NewProject.setObjectName("NewProject")
         NewProject.resize(1080, 741)
@@ -26,6 +27,8 @@ class Ui_NewProject(object):
         NewProject.setStyleSheet("background-color: rgb(255, 234, 212);\n"
 "\n"
 "")
+
+        self.tmpPath = ''
 
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(NewProject)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
@@ -349,10 +352,10 @@ class Ui_NewProject(object):
         _translate = QtCore.QCoreApplication.translate
         NewProject.setWindowTitle(_translate("NewProject", "CinemaSimi - Nuevo Proyecto"))
 
-        self.btnCancel.setText(_translate("NewProject", "Cancelar Exportación"))
-        self.label_9.setText(_translate("NewProject", "Tipo de vídeo:         .mp4"))
+        self.btnCancel.setText(_translate("NewProject", "Cancelar Procesamiento"))
+        self.label_9.setText(_translate("NewProject", "Tipo de vídeo:         "))
         self.label.setText(_translate("NewProject", " Seleccione su vídeo ..."))
-        self.label_8.setText(_translate("NewProject", "Duración del vídeo:  00:01:20"))
+        self.label_8.setText(_translate("NewProject", "Duración del vídeo:  "))
         self.lblEstimated.setText(_translate("NewProject", " Tiempo estimado:"))
         self.btnProcesar.setText(_translate("NewProject", "Procesar"))
 
@@ -384,10 +387,8 @@ class Ui_NewProject(object):
     def increase_step(self):
         self.progressBar.setValue(self.progressBar.value()+1)
 
-
     def procesarHandler(self):
         self.recognition()
-
 
     def recognition(self):
         self.mediaPlayer.stop()
@@ -404,7 +405,11 @@ class Ui_NewProject(object):
         self.timer.start(100)
         self.timer.timeout.connect(self.increase_step)
 
-        speechRecognition.recognize(self.actualPath)
+        speechRecognition.recognize(self.tmpPath)
+
+        ################## SUBTITULADO DE PRUEBA ######################
+
+        subtitle(self.tmpPath)
 
     def cancel(self):
         if self.timer.isActive() :
@@ -422,6 +427,11 @@ class Ui_NewProject(object):
         self.btnCancel.hide()
         self.lblEstimated.hide()
 
+        folder = os.path.dirname(self.tmpPath) + "/tempOutput.mp4"
+
+        updatePath(folder, self.tmpPath)
+
+
     def cancelHandler(self):
         self.cancel()
 
@@ -436,8 +446,9 @@ class Ui_NewProject(object):
             s = round(size_bytes / p, 2)
             return "%s %s" % (s, size_name[i])
 
-        filename = QFileDialog.getOpenFileName(None,'Seleccionar Video', r"C:\\Users\\Abraham\\Videos\\","Archivos de Video(*.mp4 *.mkv *.wmv)")
+        filename = QFileDialog.getOpenFileName(None,'Seleccionar Video', r"","Archivos de Video(*.mp4 *.mkv *.wmv)")
         path = filename[0]
+
         if path == "":
             return
 
@@ -446,7 +457,8 @@ class Ui_NewProject(object):
         self.btnStop.setEnabled(True)
         self.label.setText("  " + path)
         video = TinyTag.get(path)
-        self.actualPath = path
+        self.tmpPath = path
+
         self.label_9.setText("Tipo de vídeo:         " + path[len(path)-4:])
         self.label_8.setText("Duración del vídeo:  " + time.strftime('%H:%M:%S', time.gmtime(video.duration)))
 

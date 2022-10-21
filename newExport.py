@@ -1,3 +1,4 @@
+import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtMultimediaWidgets import *
@@ -6,11 +7,21 @@ from PyQt5.QtCore import QUrl, QTimer
 from tinytag import TinyTag
 import math
 import time
-import icons_rc
+from subtitle import subtitle2
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 
+gpath = ''
+upload = ''
+
+def updatePath(tmp, proc):
+    global gpath
+    global upload
+
+    gpath = tmp
+    upload = proc
+
 class Ui_Export(object):
-    actualPath = ""
+
     def setupUi(self, Export):
         Export.setObjectName("Export")
         Export.resize(1080, 741)
@@ -25,6 +36,8 @@ class Ui_Export(object):
         Export.setStyleSheet("background-color: rgb(255, 234, 212);\n"
 "\n"
 "")
+
+        self.exportPath = ""
 
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(Export)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
@@ -428,9 +441,9 @@ class Ui_Export(object):
         Export.setWindowTitle(_translate("Export", "CinemaSimi - Exportar"))
 
         self.btnCancel.setText(_translate("Export", "Cancelar Exportación"))
-        self.lblLocation.setText(_translate("Export", "C:/User/Videos/"))
-        self.lblLenght.setText(_translate("Export", "Duración del vídeo:  00:01:20"))
-        self.lblTipe.setText(_translate("Export", "Tipo de vídeo:         .mp4"))
+        self.lblLocation.setText(_translate("Export", " Seleccionar carpeta..."))
+        self.lblLenght.setText(_translate("Export", "Duración del vídeo:  "))
+        self.lblTipe.setText(_translate("Export", "Tipo de vídeo:         "))
         self.lblSize.setText(_translate("Export", " Tamaño del video: "))
 
         self.comboBox.setItemText(0, _translate("Export", "Seleccione la calidad de video"))
@@ -444,9 +457,9 @@ class Ui_Export(object):
 
         self.pushButton.clicked.connect(self.pushButton_handler)
 
-        self.btnPlay.setEnabled(False)
-        self.btnPause.setEnabled(False)
-        self.btnStop.setEnabled(False)
+        self.btnPlay.setEnabled(True)
+        self.btnPause.setEnabled(True)
+        self.btnStop.setEnabled(True)
         self.btnCancel.setEnabled(False)
 
         #self.btnExportar.setEnabled(False)
@@ -458,7 +471,15 @@ class Ui_Export(object):
         self.btnExportar.clicked.connect(self.run)
         self.btnCancel.clicked.connect(self.cancelHandler)
 
+        self.actual = ""
+        self.folder = ""
+        self.exportFolder = ""
+
     def play_video(self):
+        if len(self.actual) < 1:
+            global gpath
+            self.update(gpath)
+
         if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
             self.mediaPlayer.pause()
         else:
@@ -470,7 +491,6 @@ class Ui_Export(object):
     def run(self):
 
         if self.comboBox.currentIndex() != 0:
-
             self.mediaPlayer.stop()
             self.btnPlay.setEnabled(False)
             self.btnPause.setEnabled(False)
@@ -486,10 +506,17 @@ class Ui_Export(object):
             self.timer.start(100)
             self.timer.timeout.connect(self.increase_step)
 
+            global upload
+
+            subtitle2(upload,self.exportFolder,0)
+
+            base = os.path.basename(upload)
+            newPath = self.exportFolder + "\SUB_" + base
+
+            self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(newPath)))
 
         else:
             print("Seleccione la calidad de vídeo deseada.")
-
 
     def cancel(self):
         if self.timer.isActive() :
@@ -506,16 +533,18 @@ class Ui_Export(object):
         self.btnCancel.setEnabled(False)
         self.btnCancel.hide()
         self.lblEstimated.hide()
+        os.remove(self.actual)
+
+        self.pushButton.setEnabled(False)
+        self.comboBox.setEnabled(False)
 
     def cancelHandler(self):
         self.cancel()
 
     def pushButton_handler(self):
-        self.openVideo()
+        self.selectFolder()
 
-
-    def openVideo(self):
-
+    def selectFolder(self):
         def convert_size(size_bytes):
             if size_bytes == 0:
                 return "0B"
@@ -524,22 +553,32 @@ class Ui_Export(object):
             p = math.pow(1024, i)
             s = round(size_bytes / p, 2)
             return "%s %s" % (s, size_name[i])
+        print(self.actual)
 
-        filename = QFileDialog.getOpenFileName(None,'Seleccionar Video', r"C:\\Users\\Abraham\\Videos\\","Archivos de Video(*.mp4 *.mkv *.wmv)")
-        path = filename[0]
+        if len(self.actual) < 1:
+            global gpath
+            self.update(gpath)
+
+        filename = QFileDialog.getExistingDirectory(None,'Seleccionar Carpeta')
+
+        path = filename
+
+        self.exportFolder = path
+
         if path == "":
             return
 
-        self.btnPlay.setEnabled(True)
-        self.btnPause.setEnabled(True)
-        self.btnStop.setEnabled(True)
         self.lblLocation.setText("  " + path)
-        video = TinyTag.get(path)
-        self.actualPath = path
-        self.lblTipe.setText("Tipo de vídeo:         " + path[len(path)-4:])
+        video = TinyTag.get(self.actual)
+
+        self.lblTipe.setText("Tipo de vídeo:         " + self.actual[len(self.actual)-4:])
         self.lblLenght.setText("Duración del vídeo:  " + time.strftime('%H:%M:%S', time.gmtime(video.duration)))
 
+    def update(self, path):
+        self.actual = path
+        self.folder = os.path.dirname(path)
         self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(path)))
+
 
 
 if __name__ == "__main__":

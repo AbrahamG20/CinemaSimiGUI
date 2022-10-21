@@ -1,10 +1,9 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QWidget, QStackedWidget, QVBoxLayout
+from PyQt5 import QtGui, QtWidgets
+from PyQt5.QtWidgets import QApplication, QWidget, QStackedWidget
 from home import Ui_CinemaSimi
 from newProject import Ui_NewProject
 from newExport import Ui_Export
 import sys
-import icons_rc
 
 
 class Home(QWidget):
@@ -19,9 +18,7 @@ class NewProject(QWidget):
         super(NewProject,self).__init__()
         self.ui = Ui_NewProject()
         self.ui.setupUi(self)
-        self.ui.btnCancel.clicked.connect(self.goExport)
-
-
+        #self.ui.btnCancel.clicked.connect(self.goExport)
 
 class NewExport(QWidget):
     def __init__(self):
@@ -58,7 +55,7 @@ if __name__ == "__main__":
     newExport = QtWidgets.QWidget()
     ui2 = Ui_Export()
     ui2.setupUi(newExport)
-    #ui1.btnProcesar.clicked.connect(goHome)
+
 
     widget.addWidget(CinemaSimi)
     widget.addWidget(newProject)
