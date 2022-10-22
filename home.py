@@ -81,6 +81,7 @@ class Ui_CinemaSimi(object):
         self.btnAdd.setAutoRaise(True)
         self.btnAdd.setArrowType(QtCore.Qt.NoArrow)
         self.btnAdd.setObjectName("btnAdd")
+
         self.lytPrincipal.addWidget(self.btnAdd, 0, 0, 1, 1)
         self.lblNew = QtWidgets.QLabel(CinemaSimi)
         self.lblNew.setObjectName("lblNew")
@@ -95,12 +96,10 @@ class Ui_CinemaSimi(object):
         CinemaSimi.setWindowTitle(_translate("CinemaSimi", "CinemaSimi - Inicio"))
         self.lblNew.setText(_translate("CinemaSimi", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">Crear nuevo proyecto</span></p></body></html>"))
 
-
-
-if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    CinemaSimi = QtWidgets.QWidget()
-    ui = Ui_CinemaSimi()
-    ui.setupUi(CinemaSimi)
-    CinemaSimi.show()
-    sys.exit(app.exec_())
+#if __name__ == "__main__":
+#    app = QtWidgets.QApplication(sys.argv)
+#    CinemaSimi = QtWidgets.QWidget()
+#    ui = Ui_CinemaSimi()
+#    ui.setupUi(CinemaSimi)
+#    CinemaSimi.show()
+#    sys.exit(app.exec_())

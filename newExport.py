@@ -581,11 +581,11 @@ class Ui_Export(object):
 
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Export = QtWidgets.QWidget()
-    ui = Ui_Export()
-    ui.setupUi(Export)
-    Export.show()
-    sys.exit(app.exec_())
+#if __name__ == "__main__":
+#    import sys
+#    app = QtWidgets.QApplication(sys.argv)
+#    Export = QtWidgets.QWidget()
+#    ui = Ui_Export()
+#    ui.setupUi(Export)
+#    Export.show()
+#    sys.exit(app.exec_())

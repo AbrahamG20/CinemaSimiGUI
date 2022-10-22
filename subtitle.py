@@ -1,5 +1,8 @@
-from moviepy.editor import *
+from moviepy.editor import TextClip
+from moviepy.video.compositing.CompositeVideoClip import CompositeVideoClip
+from moviepy.video.io.VideoFileClip import VideoFileClip
 from moviepy.video.tools.subtitles import SubtitlesClip
+import os
 from tinytag import TinyTag
 
 generator = lambda txt: TextClip(txt, font='Arial', fontsize=24, color='white')

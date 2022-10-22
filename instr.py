@@ -1,6 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
 class Ui_Instrucciones(object):
     def setupUi(self, Instrucciones):
         Instrucciones.setObjectName("Instrucciones")
@@ -181,14 +180,13 @@ class Ui_Instrucciones(object):
         Instrucciones.setWindowTitle(_translate("Instrucciones", "Instrucciones"))
         self.label.setText(_translate("Instrucciones", "<html><head/><body><p><span style=\" font-size:12pt;\">Bienvenido a </span><span style=\" font-size:12pt; font-weight:600; font-style:italic;\">CinemaSimi</span></p><p><span style=\" font-size:12pt;\">En esta aplicación podrás traducir tu vídeo favorito del español al quechua. A continuación te daremos instrucciones para que puedas traducir tu video de manera satisfactoria.</span></p></body></html>"))
         self.btnClose.setText(_translate("Instrucciones", "Cerrar"))
-import icons_rc
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Instrucciones = QtWidgets.QMainWindow()
-    ui = Ui_Instrucciones()
-    ui.setupUi(Instrucciones)
-    Instrucciones.show()
-    sys.exit(app.exec_())
+#if __name__ == "__main__":
+#    import sys
+#    app = QtWidgets.QApplication(sys.argv)
+#    Instrucciones = QtWidgets.QMainWindow()
+#    ui = Ui_Instrucciones()
+#    ui.setupUi(Instrucciones)
+#    Instrucciones.show()
+#    sys.exit(app.exec_())

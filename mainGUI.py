@@ -5,7 +5,6 @@ from newProject import Ui_NewProject
 from newExport import Ui_Export
 import sys
 
-
 class Home(QWidget):
     def __init__(self):
         super(Home, self).__init__()
@@ -55,6 +54,7 @@ if __name__ == "__main__":
     newExport = QtWidgets.QWidget()
     ui2 = Ui_Export()
     ui2.setupUi(newExport)
+    ui2.btnCancel.clicked.connect(goHome)
 
 
     widget.addWidget(CinemaSimi)

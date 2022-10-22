@@ -8,7 +8,7 @@ from tinytag import TinyTag
 import math
 import time
 from newExport import updatePath
-import speechRecognition
+#mport speechRecognition
 from subtitle import subtitle
 
 class Ui_NewProject(object):
@@ -405,7 +405,7 @@ class Ui_NewProject(object):
         self.timer.start(100)
         self.timer.timeout.connect(self.increase_step)
 
-        speechRecognition.recognize(self.tmpPath)
+        #speechRecognition.recognize(self.tmpPath)
 
         ################## SUBTITULADO DE PRUEBA ######################
 
@@ -466,11 +466,11 @@ class Ui_NewProject(object):
 
         self.btnProcesar.setEnabled(True)
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    NewProject = QtWidgets.QWidget()
-    ui = Ui_NewProject()
-    ui.setupUi(NewProject)
-    NewProject.show()
-    sys.exit(app.exec_())
+#if __name__ == "__main__":
+#    import sys
+#    app = QtWidgets.QApplication(sys.argv)
+#    NewProject = QtWidgets.QWidget()
+#    ui = Ui_NewProject()
+#    ui.setupUi(NewProject)
+#    NewProject.show()
+#    sys.exit(app.exec_())
