@@ -5,11 +5,9 @@ from PyQt5.QtMultimediaWidgets import *
 from PyQt5.QtMultimedia import *
 from PyQt5.QtCore import QUrl, QTimer
 from tinytag import TinyTag
-import math
 import time
-from newExport import updatePath
-#mport speechRecognition
-from subtitle import subtitle
+import icons_rc
+#import speechRecognition
 
 class Ui_NewProject(object):
 
@@ -371,9 +369,8 @@ class Ui_NewProject(object):
         self.btnPause.clicked.connect(self.mediaPlayer.pause)
         self.btnStop.clicked.connect(self.mediaPlayer.stop)
 
-        self.btnProcesar.clicked.connect(self.procesarHandler)
-
-        self.btnCancel.clicked.connect(self.cancelHandler)
+        #self.btnProcesar.clicked.connect(self.procesarHandler)
+        #self.btnCancel.clicked.connect(self.cancelHandler)
 
     def play_video(self):
         if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
@@ -390,6 +387,11 @@ class Ui_NewProject(object):
     def procesarHandler(self):
         self.recognition()
 
+    def increase(self):
+        self.timer.start(100)
+        self.timer.timeout.connect(self.increase_step)
+
+    '''
     def recognition(self):
         self.mediaPlayer.stop()
         self.btnPlay.setEnabled(False)
@@ -402,14 +404,14 @@ class Ui_NewProject(object):
         self.btnCancel.show()
         self.lblEstimated.show()
 
-        self.timer.start(100)
-        self.timer.timeout.connect(self.increase_step)
-
         #speechRecognition.recognize(self.tmpPath)
 
         ################## SUBTITULADO DE PRUEBA ######################
+        QTimer.singleShot(500, lambda: subtitle(self.tmpPath))
 
-        subtitle(self.tmpPath)
+        folder = os.path.dirname(self.tmpPath) + "/tempOutput.mp4"
+        updatePath(folder, self.tmpPath)
+    '''
 
     def cancel(self):
         if self.timer.isActive() :
@@ -427,24 +429,10 @@ class Ui_NewProject(object):
         self.btnCancel.hide()
         self.lblEstimated.hide()
 
-        folder = os.path.dirname(self.tmpPath) + "/tempOutput.mp4"
-
-        updatePath(folder, self.tmpPath)
-
-
     def cancelHandler(self):
         self.cancel()
 
     def openVideo(self):
-
-        def convert_size(size_bytes):
-            if size_bytes == 0:
-                return "0B"
-            size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
-            i = int(math.floor(math.log(size_bytes, 1024)))
-            p = math.pow(1024, i)
-            s = round(size_bytes / p, 2)
-            return "%s %s" % (s, size_name[i])
 
         filename = QFileDialog.getOpenFileName(None,'Seleccionar Video', r"","Archivos de Video(*.mp4 *.mkv *.wmv)")
         path = filename[0]
@@ -466,11 +454,13 @@ class Ui_NewProject(object):
 
         self.btnProcesar.setEnabled(True)
 
-#if __name__ == "__main__":
-#    import sys
-#    app = QtWidgets.QApplication(sys.argv)
-#    NewProject = QtWidgets.QWidget()
-#    ui = Ui_NewProject()
-#    ui.setupUi(NewProject)
-#    NewProject.show()
-#    sys.exit(app.exec_())
+"""
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    NewProject = QtWidgets.QWidget()
+    ui = Ui_NewProject()
+    ui.setupUi(NewProject)
+    NewProject.show()
+    sys.exit(app.exec_())
+"""

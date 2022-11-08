@@ -91,15 +91,18 @@ class Ui_CinemaSimi(object):
         self.retranslateUi(CinemaSimi)
         QtCore.QMetaObject.connectSlotsByName(CinemaSimi)
 
+
     def retranslateUi(self, CinemaSimi):
         _translate = QtCore.QCoreApplication.translate
         CinemaSimi.setWindowTitle(_translate("CinemaSimi", "CinemaSimi - Inicio"))
         self.lblNew.setText(_translate("CinemaSimi", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">Crear nuevo proyecto</span></p></body></html>"))
 
-#if __name__ == "__main__":
-#    app = QtWidgets.QApplication(sys.argv)
-#    CinemaSimi = QtWidgets.QWidget()
-#    ui = Ui_CinemaSimi()
-#    ui.setupUi(CinemaSimi)
-#    CinemaSimi.show()
-#    sys.exit(app.exec_())
+"""
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    CinemaSimi = QtWidgets.QWidget()
+    ui = Ui_CinemaSimi()
+    ui.setupUi(CinemaSimi)
+    CinemaSimi.show()
+    sys.exit(app.exec_())
+"""

@@ -1,14 +1,14 @@
 import speech_recognition as sr
-import moviepy.editor as mp
+from moviepy.editor import VideoFileClip
 import os
+import re
 
 def getFolder(path):
     pathBase = os.path.dirname(path)
     return pathBase
 
 def recognize(path):
-    print(path)
-    my_clip = mp.VideoFileClip(path)
+    my_clip = VideoFileClip(path)
     my_clip.audio.write_audiofile(r"tmp_audio.wav")
     r = sr.Recognizer()
     tmp = sr.AudioFile("tmp_audio.wav")
@@ -17,54 +17,39 @@ def recognize(path):
         audio = r.record(source)
 
     recog = r.recognize_google(audio, language= 'es-MX')
-
-    path_base = getFolder(path)
-    #print(path_base)
-
-    #text_file = open(path_base+"\\data.txt", "w")
-    #text_file.write(recog)
-    #text_file.close()
-
     os.remove("tmp_audio.wav")
 
-    #return print("Se generó el txt con el audio reconocido.")
-
-#from vosk import  Model, KaldiRecognizer
-#import wave
-#import json
+    return recog
 
 
-#def recognize2(path):
-#    my_clip = mp.VideoFileClip(path)
-#    my_clip.audio.write_audiofile(r"tmp_audio.wav")
+#texto = "Ya que conteste todas tus preguntas tengo muchos para ti para empezar me lo firmo como sudas cuando acabes quieres firmarlo eres mi vengador favorito Por cierto estás bien  Sí claro En serio estoy muy bien de verlos a ellos"
 
-#    wf = wave.open("tmp_audio.wav", "rb")
-#    model = Model(r'vosk-es')
-#    rec = KaldiRecognizer(model, wf.getframerate())
-#    rec.SetWords(True)
-#    results = []
+def sentences(text):
+    text = str(text)
+    newText = text[0].upper() + text[1:]
+    fragments = re.findall('[A-Z][^A-Z]*', newText)
+    finalText = []
 
- #   while True:
- #       data = wf.readframes(4000)
- #       if len(data) == 0:
- #           break
- #       if rec.AcceptWaveform(data):
- #           part_result = json.loads(rec.Result())
- #           results.append(part_result)
- #   part_result = json.loads(rec.FinalResult())
- #   results.append(part_result)
-
-  #  path_base = getFolder(path)
-
-  #  text = ''
-  #  for r in results:
-  #      text += r['text'] + ' '
-
-   # text_file = open(path_base+"\\data1.txt", "w")
-   # text_file.write(text)
-   # text_file.close()
-   # os.remove("tmp_audio.wav")
-   # print(results)
-   # return print("Se generó el txt con el audio reconocido.")
+    for i in range(len(fragments)):
+        w = 5
+        count = 0
+        for word in fragments[i].split():
+            count+=1
+            words = fragments[i].split()
+        if count > w:
+            nmb = round(count/w)
+            for j in range(nmb):
+                ini = w * j
+                fin = (j+1) * w
+                sentence = words[ini:fin]
+                sentence = " ".join(sentence)
+                finalText.append(sentence)
+        else:
+            finalText.append(fragments[i])
+    return finalText
 
 
+#path = "C:\\Users\\Abraham\\Videos\\Captures\\prueba.mp4"
+
+#recog = recognize(path)
+#print(sentences(recog))
